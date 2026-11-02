@@ -4,6 +4,48 @@
 // ═══════════════════════════════════════════════════════════
 import { useEffect, useState } from "react";
 
+// ─── PART 0: ABOUT ME ─────────────────────────────────────
+// Edit anything in quotes. Leave a link as "" to hide its button.
+const ME = {
+  name: "Ananya (Ana) Tomar",
+  initials: "AT",
+  headline:
+    "Master of International Affairs candidate, School of International and Public Affairs (SIPA), Columbia University",
+  concentration: "International Security and Diplomacy",
+  location: "New York City",
+  bio: "I am a Master of International Affairs candidate at Columbia University's School of International and Public Affairs (SIPA), concentrating in International Security and Diplomacy. My coursework focuses on cyber policy, AI governance, international security and how policy is shaped through legislation and government relations. I serve as Vice President of the SIPA Student Association (SIPASA), representing more than 1,500 students. I built NYC Policy Watch to follow how New York City and New York State legislate on issues that affect residents.",
+  focus: [
+    "Cyber policy",
+    "AI governance",
+    "International security",
+    "Diplomacy",
+    "South Asian security",
+    "UN peacekeeping",
+    "Government relations",
+  ],
+  facts: [
+    [
+      "Education",
+      "Master of International Affairs, School of International and Public Affairs (SIPA), Columbia University · B.A. (Hons) Political Science, Lady Shri Ram College for Women, University of Delhi",
+    ],
+    [
+      "Leadership",
+      "Vice President, SIPA Student Association (SIPASA) · Strategic Advisor, South Asian Association",
+    ],
+    [
+      "Experience",
+      "U.S. House internship (Rep. David Schweikert) · Centre for UN Peacekeeping · United Service Institution of India · Plan International India",
+    ],
+    ["Languages", "Hindi, English, Urdu (professional), French (beginner)"],
+    ["Tools", "R, ArcGIS, React"],
+  ],
+  links: {
+    linkedin: "", // e.g. "https://www.linkedin.com/in/your-name"
+    email: "", // e.g. "you@example.com"
+    resume: "", // a link to your resume, e.g. a Google Drive share link
+  },
+};
+
 // ─── PART 1: YOUR BILL DATA ───────────────────────────────
 // ─────────────────────────────────────────────────────────────
 // YOUR BILL DATA — no API key needed.
@@ -569,6 +611,179 @@ function AppleIcon() {
   );
 }
 
+// The "About me" card shown above the tracker.
+function About({ theme, onOpenProject }) {
+  const { linkedin, email, resume } = ME.links;
+  return (
+    <section
+      className="npw npw-about"
+      data-theme={theme}
+      aria-labelledby="about-title"
+    >
+      <div className="npw-about-main">
+        <div className="npw-about-id">
+          <div className="npw-monogram" aria-hidden="true">
+            {ME.initials}
+          </div>
+          <div>
+            <span className="npw-kicker">About me · {ME.location}</span>
+            <h1 id="about-title">{ME.name}</h1>
+            <p className="npw-about-headline">
+              {ME.headline}
+              <br />
+              <span>{ME.concentration}</span>
+            </p>
+          </div>
+        </div>
+        <p className="npw-about-bio">{ME.bio}</p>
+        <div className="npw-about-focus">
+          {ME.focus.map((f) => (
+            <span key={f} className="npw-focus">
+              {f}
+            </span>
+          ))}
+        </div>
+        <div className="npw-about-links">
+          <button className="npw-btn" onClick={onOpenProject}>
+            ← Back to Policy Watch
+          </button>
+          {linkedin && (
+            <a
+              className="npw-btn npw-btn-ghost"
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn ↗
+            </a>
+          )}
+          {resume && (
+            <a
+              className="npw-btn npw-btn-ghost"
+              href={resume}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Resume ↗
+            </a>
+          )}
+          {email && (
+            <a className="npw-btn npw-btn-ghost" href={"mailto:" + email}>
+              {email}
+            </a>
+          )}
+        </div>
+      </div>
+      <dl className="npw-facts">
+        {ME.facts.map(([label, value]) => (
+          <div key={label}>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+// Top bar: your name on the left, the sunset/night torch on the right.
+function Nav({ theme, toggleTheme, onOpenAbout }) {
+  return (
+    <nav className="npw npw-nav" data-theme={theme} aria-label="Site">
+      <button
+        className="npw-brand"
+        onClick={onOpenAbout}
+        aria-label={"About " + ME.name}
+      >
+        <span className="npw-brand-mark" aria-hidden="true">
+          {ME.initials}
+        </span>
+        <span className="npw-brand-name">{ME.name}</span>
+      </button>
+      <TorchToggle theme={theme} onToggle={toggleTheme} />
+    </nav>
+  );
+}
+
+// The About panel is open when the link ends in #about, so it can be shared directly.
+function useAboutPanel() {
+  const isOpen = () => window.location.hash === "#about";
+  const [open, setOpen] = useState(isOpen);
+  useEffect(() => {
+    const onHash = () => setOpen(isOpen());
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  const show = () => {
+    window.location.hash = "about";
+    setOpen(true);
+  };
+  const hide = () => {
+    try {
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search
+      );
+    } catch {
+      window.location.hash = "";
+    }
+    setOpen(false);
+  };
+  return [open, show, hide];
+}
+
+// Corner tab + slide-in panel with the About me card.
+function AboutCorner({ open, onOpen, onClose, theme }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.getElementById("npw-close")?.focus();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open, onClose]);
+
+  return (
+    <>
+      {!open && (
+        <button className="npw npw-corner" data-theme={theme} onClick={onOpen}>
+          <span className="npw-brand-mark" aria-hidden="true">
+            {ME.initials}
+          </span>
+          <span>About me</span>
+        </button>
+      )}
+      {open && (
+        <div className="npw-drawer-wrap" data-theme={theme}>
+          <div className="npw-backdrop" onClick={onClose} />
+          <aside
+            className="npw npw-drawer"
+            data-theme={theme}
+            role="dialog"
+            aria-modal="true"
+            aria-label="About me"
+          >
+            <button
+              id="npw-close"
+              className="npw-close"
+              onClick={onClose}
+              aria-label="Close About me"
+            >
+              ✕
+            </button>
+            <About theme={theme} onOpenProject={onClose} />
+          </aside>
+        </div>
+      )}
+    </>
+  );
+}
+
 // The 5-segment progress bar on each card.
 function StageTrack({ stage, labels }) {
   return (
@@ -641,13 +856,12 @@ function BillCard({ bill, followed, onFollow, index = 0 }) {
   );
 }
 
-function PolicyWatch() {
+function PolicyWatch({ theme }) {
   const [level, setLevel] = useState("city");
   const [topic, setTopic] = useState("All");
   const [query, setQuery] = useState("");
   const [boro, setBoro] = useState("all");
   const [follows, toggleFollow] = useFollows();
-  const [theme, toggleTheme] = useTheme();
 
   const levelBills = bills.filter((b) => b.level === level);
   const q = query.toLowerCase();
@@ -667,7 +881,6 @@ function PolicyWatch() {
       data-theme={theme}
     >
       <header className="npw-mast">
-        <TorchToggle theme={theme} onToggle={toggleTheme} />
         <div className="npw-mast-inner">
           <div className="npw-mast-text">
             <span className="npw-kicker">
@@ -834,9 +1047,22 @@ function PolicyWatch() {
 
 // ─── PART 4: THE PAGE ─────────────────────────────────────
 export default function App() {
+  const [theme, toggleTheme] = useTheme();
+  const [aboutOpen, openAbout, closeAbout] = useAboutPanel();
+  // Let the page background follow the sunset/night switch too.
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
   return (
     <main>
-      <PolicyWatch />
+      <Nav theme={theme} toggleTheme={toggleTheme} onOpenAbout={openAbout} />
+      <PolicyWatch theme={theme} />
+      <AboutCorner
+        open={aboutOpen}
+        onOpen={openAbout}
+        onClose={closeAbout}
+        theme={theme}
+      />
     </main>
   );
 }

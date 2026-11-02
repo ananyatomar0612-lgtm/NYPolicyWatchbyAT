@@ -1013,3 +1013,616 @@ body,
     left: 24px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ABOUT ME
+   ═══════════════════════════════════════════════════════════ */
+.npw-about {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 32px 28px;
+  margin-bottom: 24px;
+  position: relative;
+  background: radial-gradient(
+      90% 120% at 0% 0%,
+      color-mix(in srgb, var(--pop) 12%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      80% 120% at 100% 100%,
+      color-mix(in srgb, var(--band) 14%, transparent),
+      transparent 60%
+    ),
+    var(--surface);
+  border: 1px solid var(--line);
+  animation: npw-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.npw-about::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  opacity: 0.85;
+  background: repeating-conic-gradient(var(--ink) 0 25%, #f7b500 0 50%) 0 0 /
+    6px 6px;
+}
+.npw-about-main {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  min-width: 0;
+}
+.npw-about-id {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.npw-monogram {
+  flex: none;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 28px;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  background: linear-gradient(
+    140deg,
+    var(--band) 0%,
+    var(--band-deep) 55%,
+    var(--pop) 140%
+  );
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pop) 35%, transparent),
+    0 10px 24px -10px var(--band);
+  transition: transform 0.3s ease;
+}
+.npw-about:hover .npw-monogram {
+  transform: rotate(-6deg) scale(1.04);
+}
+.npw-about h1 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.02;
+  margin: 4px 0 6px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.npw-about-headline {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+}
+.npw-about-headline span {
+  color: var(--muted);
+  font-weight: 400;
+}
+.npw-about-bio {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--ink);
+  font-size: 16px;
+}
+.npw-about-focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.npw-focus {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: npw-rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.npw-focus:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.npw-focus:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.npw-focus:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.npw-focus:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.npw-focus:nth-child(6) {
+  animation-delay: 0.25s;
+}
+.npw-focus:nth-child(7) {
+  animation-delay: 0.3s;
+}
+.npw-focus:hover {
+  transform: translateY(-2px);
+  border-color: var(--pop);
+}
+.npw-about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.npw-btn {
+  font: 600 14px var(--body);
+  text-decoration: none;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--band);
+  color: #ffffff;
+  box-shadow: inset 0 -2px 0 var(--pop);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.npw-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 -2px 0 var(--pop), 0 10px 20px -10px var(--band);
+}
+.npw-btn-ghost {
+  background: transparent;
+  color: var(--link);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+.npw-facts {
+  margin: 0;
+  display: grid;
+  gap: 0;
+  align-content: start;
+  padding: 4px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.npw-facts div {
+  padding: 12px 0;
+  display: grid;
+  gap: 2px;
+}
+.npw-facts div + div {
+  border-top: 1px dashed var(--line);
+}
+.npw-facts dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.npw-facts dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+@media (max-width: 680px) {
+  .npw-about {
+    grid-template-columns: 1fr;
+    padding: 24px 16px 28px;
+    gap: 22px;
+  }
+  .npw-monogram {
+    width: 60px;
+    height: 60px;
+    font-size: 22px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SITE NAV: glass bar with page tabs + torch switch
+   ═══════════════════════════════════════════════════════════ */
+.npw.npw-nav {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 10px);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1080px;
+  margin: 0 auto 20px;
+  padding: 8px 10px 8px 12px;
+  overflow: visible;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 12px 32px -18px rgba(10, 20, 50, 0.45);
+  animation: npw-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.npw-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--ink);
+  font: inherit;
+}
+.npw-brand-mark {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 14px;
+  color: #ffffff;
+  background: linear-gradient(
+    140deg,
+    var(--band) 0%,
+    var(--band-deep) 55%,
+    var(--pop) 140%
+  );
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pop) 30%, transparent);
+  transition: transform 0.3s ease;
+}
+.npw-brand:hover .npw-brand-mark {
+  transform: rotate(-8deg) scale(1.06);
+}
+.npw-brand-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.npw-pagetabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--soft) 70%, transparent);
+  border: 1px solid var(--line);
+}
+.npw-pageglider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--band);
+  box-shadow: inset 0 -2px 0 var(--pop), 0 6px 16px -6px var(--band);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.npw-pagetabs[data-active="policy-watch"] .npw-pageglider {
+  transform: translateX(100%);
+}
+.npw-pagetab {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  white-space: nowrap;
+  padding: 8px 18px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+.npw-pagetab:hover {
+  color: var(--ink);
+}
+.npw-pagetab[aria-selected="true"] {
+  color: #ffffff;
+}
+
+/* The torch switch, restyled for the nav bar */
+.npw-nav .npw-toggle {
+  position: static;
+  flex: none;
+  color: var(--ink);
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  box-shadow: none;
+}
+.npw-nav .npw-toggle:hover {
+  background: var(--surface);
+}
+.npw-nav .npw-toggle-flame {
+  fill: color-mix(in srgb, var(--muted) 20%, transparent);
+  stroke: var(--muted);
+}
+
+/* Pages fade up when you switch */
+.npw-page {
+  animation: npw-rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.npw-about {
+  margin-bottom: 0;
+}
+.npw-mast-inner {
+  padding-top: 40px;
+}
+button.npw-btn {
+  border: 0;
+  font: 600 14px var(--body);
+}
+
+/* The tracker's filter bar now sticks just below the nav */
+.npw-filterbar {
+  top: calc(env(safe-area-inset-top, 0px) + 80px);
+}
+
+@media (max-width: 680px) {
+  .npw-brand-name {
+    display: none;
+  }
+  .npw-pagetab {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .npw-nav .npw-toggle span {
+    display: none;
+  }
+  .npw-nav .npw-toggle {
+    padding: 5px 8px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ABOUT ME: corner tab + slide-in glass panel
+   ═══════════════════════════════════════════════════════════ */
+.npw.npw-corner {
+  position: fixed;
+  z-index: 30;
+  margin: 0;
+  max-width: none;
+  overflow: visible;
+  right: calc(env(safe-area-inset-right, 0px) + 20px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px 6px 6px;
+  border-radius: 999px;
+  font: 700 14px var(--display);
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 14px 34px -14px rgba(10, 20, 50, 0.55);
+  animation: npw-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s both;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.npw.npw-corner::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  pointer-events: none;
+  border: 2px solid var(--pop);
+  opacity: 0;
+  animation: npw-ping 2.4s ease-out 1.6s 3;
+}
+.npw.npw-corner:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 18px 40px -14px var(--band);
+}
+.npw.npw-corner:hover .npw-brand-mark {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.npw-drawer-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+.npw-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 28, 0.38);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: npw-fade 0.3s ease both;
+}
+.npw.npw-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100%);
+  max-width: none;
+  margin: 0;
+  border-radius: 24px 0 0 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px)
+    calc(env(safe-area-inset-right, 0px) + 16px)
+    calc(env(safe-area-inset-bottom, 0px) + 20px) 16px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  border-left: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  box-shadow: -24px 0 60px -20px rgba(8, 12, 28, 0.5);
+  animation: npw-slide 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.npw-close {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  margin: 0 0 12px auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 15px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.npw-close:hover {
+  transform: rotate(90deg);
+  border-color: var(--pop);
+}
+.npw-close:focus-visible {
+  outline: 3px solid var(--pop);
+  outline-offset: 2px;
+}
+
+/* The About card stacks into one column inside the panel */
+.npw-drawer .npw-about {
+  grid-template-columns: 1fr;
+  padding: 26px 20px 30px;
+  gap: 22px;
+  max-width: none;
+}
+.npw-drawer .npw-about-id {
+  flex-wrap: wrap;
+}
+
+@keyframes npw-slide {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes npw-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes npw-ping {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+@media (max-width: 680px) {
+  .npw.npw-drawer {
+    border-radius: 0;
+  }
+  .npw.npw-corner {
+    right: calc(env(safe-area-inset-right, 0px) + 14px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ABOUT ME COLORS: navy + gold
+   ═══════════════════════════════════════════════════════════ */
+.npw.npw-about,
+.npw.npw-corner {
+  --band: #0a1f44;
+  --band-deep: #06142e;
+  --pop: #e0a82e;
+  --pop-ink: #1a1404;
+}
+.npw.npw-about {
+  color: #ffffff;
+  border-color: rgba(224, 168, 46, 0.35);
+  background: radial-gradient(
+      90% 70% at 100% 0%,
+      rgba(224, 168, 46, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      80% 80% at 0% 100%,
+      rgba(70, 105, 190, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(160deg, #12306a 0%, #0a1f44 55%, #06142e 100%);
+  box-shadow: 0 24px 50px -28px rgba(6, 20, 46, 0.8);
+}
+.npw-about .npw-kicker {
+  color: #e9be5b;
+}
+.npw-about h1 {
+  color: #ffffff;
+}
+.npw-about .npw-about-headline {
+  color: #ffffff;
+}
+.npw-about .npw-about-headline span {
+  color: rgba(255, 255, 255, 0.7);
+}
+.npw-about .npw-about-bio {
+  color: rgba(255, 255, 255, 0.9);
+}
+.npw-about .npw-monogram {
+  color: #0a1f44;
+  background: linear-gradient(140deg, #f6d77e 0%, #e0a82e 55%, #b5821f 100%);
+  box-shadow: 0 0 0 4px rgba(224, 168, 46, 0.3), 0 10px 24px -10px #000;
+}
+.npw-about .npw-focus {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.npw-about .npw-focus:hover {
+  border-color: #e0a82e;
+}
+.npw-about .npw-btn {
+  background: #e0a82e;
+  color: #0a1f44;
+  box-shadow: none;
+}
+.npw-about .npw-btn:hover {
+  box-shadow: 0 10px 22px -10px #e0a82e;
+}
+.npw-about .npw-btn-ghost {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.npw-about .npw-facts {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.npw-about .npw-facts div + div {
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+.npw-about .npw-facts dt {
+  color: rgba(255, 255, 255, 0.6);
+}
+.npw-about .npw-facts dd {
+  color: #ffffff;
+}
+.npw-about::after {
+  background: repeating-conic-gradient(#06142e 0 25%, #e0a82e 0 50%) 0 0 / 6px
+    6px;
+}
+.npw.npw-corner .npw-brand-mark {
+  color: #0a1f44;
+  background: linear-gradient(140deg, #f6d77e 0%, #e0a82e 55%, #b5821f 100%);
+}
