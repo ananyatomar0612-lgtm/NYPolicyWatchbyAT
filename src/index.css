@@ -1,68 +1,574 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+/* Page */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --page-bg: #e9ecef;
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg: #0a0f14;
+    color-scheme: dark;
+  }
 }
-a:hover {
-  color: #535bf2;
+:root[data-theme="dark"] {
+  --page-bg: #0a0f14;
+  color-scheme: dark;
 }
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: var(--page-bg);
+}
+main {
+  padding-block: 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
-h1 {
-  font-size: 3.2em;
+/* NYC Policy Watch styles. Everything starts with .npw so it
+   won't clash with the rest of your portfolio's styles.
+   City tab  = NYC blue (--band) + orange (--pop)
+   State tab = NYS navy (--band) + gold (--pop)              */
+
+.npw {
+  /* neutrals */
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --ink: #121a26;
+  --muted: #5a6574;
+  --line: #d8dde4;
+  --soft: #eaeef3;
+  /* city colors (default) */
+  --band: #0b3d91;
+  --band-deep: #072a66;
+  --pop: #f26b21;
+  --pop-ink: #1a1206;
+  --link: #0b3d91;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: left;
+}
+.npw[data-level="state"] {
+  --band: #0a1f44;
+  --band-deep: #06142e;
+  --pop: #e0a82e;
+  --pop-ink: #1a1404;
+  --link: #0a1f44;
+}
+
+/* Scene colors, light = sunset */
+.npw {
+  --sky: linear-gradient(
+    180deg,
+    #1f2c5c 0%,
+    #45397a 34%,
+    #a24f7d 62%,
+    #ec7c4b 86%,
+    #f7ae63 100%
+  );
+  --sil: #1d1733;
+  --water: #2f2446;
+  --ripple: #f59b55;
+}
+/* Dark theme, chosen with the torch switch */
+.npw[data-theme="dark"] {
+  --bg: #0d1219;
+  --surface: #161e29;
+  --ink: #e7ecf2;
+  --muted: #98a3b1;
+  --line: #283342;
+  --soft: #1e2835;
+  --link: #8db2f2;
+  color-scheme: dark;
+  --sky: linear-gradient(
+    180deg,
+    #03060f 0%,
+    #08122a 45%,
+    #12234a 85%,
+    #1b2f5c 100%
+  );
+  --sil: #0a0f1d;
+  --water: #050913;
+  --ripple: #f3dd9a;
+}
+.npw[data-level="state"][data-theme="dark"] {
+  --link: #ecc76e;
+}
+.npw *,
+.npw *::before,
+.npw *::after {
+  box-sizing: border-box;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.npw-mast {
+  position: relative;
+  color: #ffffff;
+  background: var(--sky);
+}
+.npw-mast-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: end;
+  padding: 56px 28px 0;
+  position: relative;
+  z-index: 1;
+}
+.npw-mast-text {
+  display: grid;
+  gap: 12px;
+}
+.npw-kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pop);
+}
+.npw-muted {
+  color: var(--muted);
+}
+.npw-mast h2 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(38px, 7vw, 68px);
+  line-height: 0.95;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(10, 8, 30, 0.35);
+}
+.npw-hl {
+  color: var(--pop);
+}
+.npw-mast p {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.88);
+}
+.npw-notice {
+  font-family: var(--mono);
+  font-size: 12px;
+  justify-self: start;
+  background: var(--pop);
+  color: var(--pop-ink);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.npw-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-top: 2px solid var(--pop);
+}
+.npw-stats div {
+  padding: 12px 10px 4px 0;
+}
+.npw-stats div + div {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+}
+.npw-stats dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+.npw-stats dd {
+  margin: 2px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* Torch-shaped light/dark switch */
+.npw-toggle {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(10, 12, 30, 0.28);
+  color: #ffffff;
   cursor: pointer;
-  transition: border-color 0.25s;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
-button:hover {
-  border-color: #646cff;
+.npw-toggle:hover {
+  background: rgba(10, 12, 30, 0.45);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.npw-toggle-cup,
+.npw-toggle-handle {
+  fill: #c9a24a;
+}
+.npw-toggle-handle {
+  fill: #a9822f;
+}
+.npw-toggle-flame {
+  fill: rgba(255, 255, 255, 0.25);
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 1;
+  transition: fill 0.3s ease, filter 0.3s ease;
+}
+.npw[data-theme="dark"] .npw-toggle-flame {
+  fill: #ffc94a;
+  stroke: #ffe39a;
+  filter: drop-shadow(0 0 4px #ffb020);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Skyline scene */
+.npw-scene {
+  display: block;
+  width: 100%;
+  height: clamp(140px, 24vw, 230px);
+  margin-top: 6px;
+}
+.npw-sil {
+  fill: var(--sil);
+}
+.npw-water {
+  fill: var(--water);
+}
+.npw-ripples {
+  fill: var(--ripple);
+  opacity: 0.7;
+}
+.npw-day,
+.npw-night,
+.npw-windows,
+.npw-esb-lights {
+  transition: opacity 0.5s ease;
+}
+.npw-night,
+.npw-windows,
+.npw-esb-lights {
+  opacity: 0;
+}
+.npw[data-theme="dark"] .npw-night,
+.npw[data-theme="dark"] .npw-windows,
+.npw[data-theme="dark"] .npw-esb-lights {
+  opacity: 1;
+}
+.npw[data-theme="dark"] .npw-day {
+  opacity: 0;
+}
+.npw-windows {
+  fill: #ffd27a;
+}
+.npw-esb-lights {
+  fill: var(--pop);
+}
+.npw-star-dot {
+  fill: #ffffff;
+}
+.npw-moon {
+  fill: #f4ecd2;
+}
+.npw-moonglow {
+  fill: #f4ecd2;
+  opacity: 0.12;
+}
+.npw-flame {
+  fill: #2a1d33;
+  transition: fill 0.4s ease;
+}
+.npw[data-theme="dark"] .npw-flame {
+  fill: #ffc94a;
+  filter: drop-shadow(0 0 5px #ffb020);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .npw[data-theme="dark"] .npw-star-dot.tw {
+    animation: npw-twinkle 3s ease-in-out infinite;
   }
-  a:hover {
-    color: #747bff;
+}
+@keyframes npw-twinkle {
+  50% {
+    opacity: 0.25;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+/* Tabs sit on a colored rail under the skyline */
+.npw-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 28px 0;
+  background: var(--band);
+  border-top: 3px solid var(--pop);
+}
+.npw-tab {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+}
+.npw-tab:hover {
+  color: #ffffff;
+}
+.npw-tab[aria-selected="true"] {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ── Body ───────────────────────────────────────────── */
+.npw-body {
+  padding: 24px 28px 28px;
+  display: grid;
+  gap: 16px;
+}
+.npw-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.npw-search {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+.npw-select {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+.npw-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.npw-chip {
+  font: 500 13px var(--body);
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.npw-chip:hover {
+  border-color: var(--pop);
+}
+.npw-chip[aria-pressed="true"] {
+  background: var(--band);
+  color: #ffffff;
+  border-color: var(--band);
+  box-shadow: inset 0 -3px 0 var(--pop);
+}
+.npw-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.npw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.npw-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+.npw-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.npw-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--link);
+}
+.npw-card h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.25;
+  margin: 2px 0 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.npw-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.npw-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--soft);
+  color: var(--muted);
+}
+.npw-sum {
+  margin: 0;
+}
+.npw-star {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  flex: none;
+}
+.npw-star[aria-pressed="true"] {
+  background: var(--pop);
+  color: var(--pop-ink);
+  border-color: var(--pop);
+}
+.npw-track {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+.npw-seg {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--soft);
+}
+.npw-seg.on {
+  background: var(--link);
+}
+.npw-seg.done {
+  background: var(--pop);
+}
+.npw-stage {
+  font-size: 13px;
+  color: var(--muted);
+}
+.npw-stage b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.npw-more {
+  font: 600 13px var(--body);
+  color: var(--link);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  justify-self: start;
+}
+.npw-detail {
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  font-size: 14px;
+  display: grid;
+  gap: 6px;
+}
+.npw-detail a {
+  color: var(--link);
+}
+.npw-empty {
+  grid-column: 1 / -1;
+  padding: 32px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+
+.npw-spot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 24px;
+  border-top: 3px solid var(--pop);
+  padding-top: 22px;
+  margin-top: 12px;
+}
+.npw-spot h3 {
+  font-family: var(--display);
+  font-size: 24px;
+  line-height: 1.15;
+  margin: 6px 0 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.npw-spot p {
+  margin: 0 0 10px;
+  max-width: 62ch;
+}
+
+.npw button:focus-visible,
+.npw input:focus-visible,
+.npw select:focus-visible,
+.npw a:focus-visible {
+  outline: 3px solid var(--pop);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .npw-card {
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .npw-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--pop);
+  }
+}
+@media (max-width: 680px) {
+  .npw-mast-inner {
+    grid-template-columns: 1fr;
+    padding: 60px 16px 0;
+    gap: 20px;
+  }
+  .npw-tabs {
+    padding: 8px 16px 0;
+  }
+  .npw-body {
+    padding: 20px 16px 24px;
+  }
+  .npw-spot {
+    grid-template-columns: 1fr;
+  }
+  .npw-tab {
+    font-size: 15px;
+    padding: 9px 12px;
+  }
+  .npw-stats dd {
+    font-size: 28px;
   }
 }
