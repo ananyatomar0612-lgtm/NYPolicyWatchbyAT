@@ -491,6 +491,84 @@ function TorchToggle({ theme, onToggle }) {
   );
 }
 
+// A little NYC cab that drives along the line under the skyline.
+function TaxiCab() {
+  return (
+    <svg className="npw-cab" viewBox="0 0 64 24" width="64" height="24">
+      <polygon className="npw-beam" points="45,13 64,8 64,21" />
+      <path
+        d="M4 18v-5l5-1 4-6h16l5 6 6 1v5z"
+        fill="#f7b500"
+        stroke="#1a1a1a"
+        strokeWidth="1"
+        strokeLinejoin="round"
+      />
+      <rect
+        x="17"
+        y="2.5"
+        width="8"
+        height="3.5"
+        rx="1"
+        fill="#f7b500"
+        stroke="#1a1a1a"
+        strokeWidth="0.8"
+      />
+      <path className="npw-cab-glass" d="M14 7h6v5h-9z M22 7h6l4 5h-10z" />
+      {[12, 15, 18, 21, 24, 27].map((x, i) => (
+        <rect
+          key={x}
+          x={x}
+          y={i % 2 ? 14.5 : 13.5}
+          width="1.5"
+          height="1"
+          fill="#1a1a1a"
+        />
+      ))}
+      <rect x="43" y="13" width="2" height="2" fill="#fff3b0" />
+      <rect x="3.5" y="13" width="1.5" height="2" fill="#e2231a" />
+      <circle
+        cx="12"
+        cy="18"
+        r="3.2"
+        fill="#1a1a1a"
+        stroke="#555"
+        strokeWidth="1"
+      />
+      <circle
+        cx="33"
+        cy="18"
+        r="3.2"
+        fill="#1a1a1a"
+        stroke="#555"
+        strokeWidth="1"
+      />
+    </svg>
+  );
+}
+
+// Small apple used in the footer.
+function AppleIcon() {
+  return (
+    <svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true">
+      <path
+        d="M16 9c-2-2-7-2.5-9 1.5-2.2 4.4.2 11.5 3.5 14.5 1.6 1.4 3 1.3 4.2.6.8-.4 1.8-.4 2.6 0 1.2.7 2.6.8 4.2-.6 3.3-3 5.7-10.1 3.5-14.5C23 6.5 18 7 16 9z"
+        fill="#e2231a"
+      />
+      <path
+        d="M16 9c0-2 .5-4 2-5.5"
+        stroke="#5b3a1e"
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M17.5 5.5c2-2.5 5-2.8 6.5-2-1 2.4-3.6 3.6-6.5 2z"
+        fill="#3fa34d"
+      />
+    </svg>
+  );
+}
+
 // The 5-segment progress bar on each card.
 function StageTrack({ stage, labels }) {
   return (
@@ -499,6 +577,7 @@ function StageTrack({ stage, labels }) {
         <span
           key={label}
           title={label}
+          style={{ "--s": i }}
           className={
             "npw-seg" + (stage === 4 ? " done" : i <= stage ? " on" : "")
           }
@@ -509,11 +588,11 @@ function StageTrack({ stage, labels }) {
 }
 
 // One bill card.
-function BillCard({ bill, followed, onFollow }) {
+function BillCard({ bill, followed, onFollow, index = 0 }) {
   const [open, setOpen] = useState(false);
   const labels = steps[bill.level];
   return (
-    <article className="npw-card">
+    <article className="npw-card" style={{ "--i": index }}>
       <div className="npw-row">
         <div>
           <div className="npw-num">{bill.number}</div>
@@ -598,7 +677,9 @@ function PolicyWatch() {
                 : "The Capitol, Albany"}
             </span>
             <h2>
-              <span className="npw-hl">{level === "city" ? "NYC" : "NYS"}</span>{" "}
+              <span className="npw-hl" key={level}>
+                {level === "city" ? "NYC" : "NYS"}
+              </span>{" "}
               Policy Watch
             </h2>
             <p>
@@ -607,79 +688,92 @@ function PolicyWatch() {
               services, with plain-English summaries I write myself.
             </p>
             <span className="npw-notice">
-              Hand-curated · updated {lastUpdated}
+              Hand-curated in the Big Apple · updated {lastUpdated}
             </span>
+            <div className="npw-tabs" role="tablist" data-active={level}>
+              <span className="npw-glider" aria-hidden="true" />
+              {[
+                ["city", "City Council"],
+                ["state", "NY State"],
+              ].map(([key, label]) => (
+                <button
+                  key={key}
+                  role="tab"
+                  className="npw-tab"
+                  aria-selected={level === key}
+                  onClick={() => setLevel(key)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
           <dl className="npw-stats">
             <div>
               <dt>Bills tracked</dt>
-              <dd>{levelBills.length}</dd>
+              <dd key={"t" + levelBills.length}>{levelBills.length}</dd>
             </div>
             <div>
               <dt>Signed into law</dt>
-              <dd>{levelBills.filter((b) => b.stage === 4).length}</dd>
+              <dd key={level + "s"}>
+                {levelBills.filter((b) => b.stage === 4).length}
+              </dd>
             </div>
             <div>
               <dt>You follow</dt>
-              <dd>{follows.size}</dd>
+              <dd key={"f" + follows.size}>{follows.size}</dd>
             </div>
           </dl>
         </div>
         <Skyline />
-        <div className="npw-tabs" role="tablist">
-          {[
-            ["city", "City Council"],
-            ["state", "NY State"],
-          ].map(([key, label]) => (
-            <button
-              key={key}
-              role="tab"
-              className="npw-tab"
-              aria-selected={level === key}
-              onClick={() => setLevel(key)}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="npw-road" aria-hidden="true">
+          <TaxiCab />
+          <div className="npw-rail" />
         </div>
       </header>
 
       <div className="npw-body">
-        <div className="npw-controls">
-          <input
-            id="npw-search"
-            className="npw-search"
-            type="search"
-            placeholder="Search bills, sponsors, keywords"
-            aria-label="Search bills"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <select
-            id="npw-boro"
-            className="npw-select"
-            aria-label="Filter by borough"
-            value={boro}
-            onChange={(e) => setBoro(e.target.value)}
-          >
-            <option value="all">All boroughs</option>
-            {BOROUGHS.map((b) => (
-              <option key={b}>{b}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="npw-chips">
-          {["All", ...topics].map((t) => (
-            <button
-              key={t}
-              className="npw-chip"
-              aria-pressed={topic === t}
-              onClick={() => setTopic(t)}
+        <div className="npw-filterbar">
+          <div className="npw-controls">
+            <input
+              id="npw-search"
+              className="npw-search"
+              type="search"
+              placeholder={
+                level === "city"
+                  ? "Search Big Apple bills, sponsors, keywords"
+                  : "Search Albany bills, sponsors, keywords"
+              }
+              aria-label="Search bills"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <select
+              id="npw-boro"
+              className="npw-select"
+              aria-label="Filter by borough"
+              value={boro}
+              onChange={(e) => setBoro(e.target.value)}
             >
-              {t}
-            </button>
-          ))}
+              <option value="all">All boroughs</option>
+              {BOROUGHS.map((b) => (
+                <option key={b}>{b}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="npw-chips">
+            {["All", ...topics].map((t) => (
+              <button
+                key={t}
+                className="npw-chip"
+                aria-pressed={topic === t}
+                onClick={() => setTopic(t)}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="npw-meta">
@@ -690,9 +784,10 @@ function PolicyWatch() {
 
         <div className="npw-grid">
           {shown.length ? (
-            shown.map((b) => (
+            shown.map((b, i) => (
               <BillCard
-                key={b.id}
+                key={level + topic + boro + b.id}
+                index={i}
                 bill={b}
                 followed={follows.has(b.id)}
                 onFollow={toggleFollow}
@@ -700,8 +795,8 @@ function PolicyWatch() {
             ))
           ) : (
             <div className="npw-empty">
-              No bills match these filters. Try a different sector or clear the
-              search.
+              No bills match these filters. Even the Big Apple has quiet days.
+              Try another sector or clear the search.
             </div>
           )}
         </div>
@@ -726,6 +821,13 @@ function PolicyWatch() {
           </div>
         </div>
       </div>
+      <footer className="npw-foot">
+        <span className="npw-checker" aria-hidden="true" />
+        <span className="npw-foot-text">
+          <AppleIcon /> Made in the Big Apple · Data from the NYC Council and NY
+          State Legislature
+        </span>
+      </footer>
     </section>
   );
 }

@@ -52,7 +52,7 @@ main {
   font-size: 15px;
   line-height: 1.55;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: clip;
   max-width: 1080px;
   margin: 0 auto;
   text-align: left;
@@ -570,5 +570,446 @@ main {
   }
   .npw-stats dd {
     font-size: 28px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODERN LAYER: glass surfaces + motion
+   (The sunset/night skyline above is unchanged.)
+   ═══════════════════════════════════════════════════════════ */
+.npw,
+.npw-card,
+.npw-chip,
+.npw-search,
+.npw-select,
+.npw-filterbar {
+  transition: background-color 0.4s ease, color 0.4s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Header text and stats rise in on load */
+.npw-mast-text > *,
+.npw-stats {
+  animation: npw-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.npw-mast-text > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+.npw-mast-text > :nth-child(3) {
+  animation-delay: 0.16s;
+}
+.npw-mast-text > :nth-child(4) {
+  animation-delay: 0.24s;
+}
+.npw-mast-text > :nth-child(5) {
+  animation-delay: 0.32s;
+}
+.npw-stats {
+  animation-delay: 0.4s;
+}
+.npw-hl {
+  display: inline-block;
+  animation: npw-swap 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Glass City / State switch with a sliding highlight */
+.npw-tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-self: start;
+  gap: 0;
+  padding: 4px;
+  margin-top: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 10px 30px rgba(8, 6, 30, 0.28);
+}
+.npw-glider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22), inset 0 -2px 0 var(--pop);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.4s ease;
+}
+.npw-tabs[data-active="state"] .npw-glider {
+  transform: translateX(100%);
+}
+.npw[data-theme="dark"] .npw-glider {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pop) 45%, transparent),
+    inset 0 -2px 0 var(--pop);
+}
+.npw-tab {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 9px 20px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  transition: color 0.35s ease;
+}
+.npw-tab:hover {
+  color: #ffffff;
+  background: none;
+}
+.npw-tab[aria-selected="true"] {
+  color: #121a26;
+  background: none;
+}
+.npw[data-theme="dark"] .npw-tab[aria-selected="true"] {
+  color: #ffffff;
+}
+
+/* Glowing rail under the skyline */
+.npw-rail {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--band),
+    var(--pop),
+    var(--band),
+    var(--pop)
+  );
+  background-size: 300% 100%;
+  animation: npw-rail 10s linear infinite;
+}
+
+/* Glass stats panel */
+.npw-stats {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-top: 2px solid var(--pop);
+  border-radius: 14px;
+  padding: 2px 14px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(8, 6, 30, 0.22);
+}
+.npw-stats dd {
+  display: inline-block;
+  animation: npw-pop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Glass torch switch */
+.npw-toggle {
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 6px 20px rgba(8, 6, 30, 0.25);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.npw-toggle:hover {
+  transform: translateY(-1px) scale(1.04);
+  background: rgba(255, 255, 255, 0.2);
+}
+.npw-toggle:active {
+  transform: scale(0.96);
+}
+.npw-toggle-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.npw[data-theme="dark"] .npw-toggle-flame {
+  animation: npw-flicker 1.6s ease-in-out infinite;
+}
+
+/* Sticky glass filter bar */
+.npw-filterbar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  display: grid;
+  gap: 12px;
+  margin-inline: -12px;
+  padding: 12px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 8px 24px -16px rgba(10, 20, 40, 0.35);
+}
+.npw-search:focus,
+.npw-select:focus {
+  outline: none;
+  border-color: var(--pop);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pop) 22%, transparent);
+}
+.npw-chip {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+}
+.npw-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--pop);
+}
+.npw-chip:active {
+  transform: scale(0.95);
+}
+.npw-chip[aria-pressed="true"] {
+  box-shadow: inset 0 -3px 0 var(--pop),
+    0 6px 16px -6px color-mix(in srgb, var(--band) 60%, transparent);
+}
+
+/* Cards: staggered entrance, lift and a light sweep on hover */
+.npw-card {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  animation: npw-rise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+.npw-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    color-mix(in srgb, var(--pop) 14%, transparent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+.npw-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--pop);
+  box-shadow: 0 18px 36px -18px color-mix(in srgb, var(--band) 55%, transparent);
+}
+.npw-card:hover::after {
+  transform: translateX(100%);
+}
+.npw-star {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.npw-star:hover {
+  transform: scale(1.1) rotate(-8deg);
+}
+.npw-star[aria-pressed="true"] {
+  animation: npw-pop 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.npw-more {
+  transition: letter-spacing 0.2s ease;
+}
+.npw-more:hover {
+  letter-spacing: 0.02em;
+}
+.npw-detail {
+  animation: npw-rise 0.35s ease both;
+}
+
+/* Progress bar segments fill in one after another */
+.npw-seg.on,
+.npw-seg.done {
+  transform-origin: left center;
+  animation: npw-fill 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms + var(--s, 0) * 90ms + 0.2s);
+}
+.npw-seg.done {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--pop) 60%, transparent);
+}
+
+/* Spotlight accent line grows in */
+.npw-spot {
+  border-top: 0;
+  position: relative;
+}
+.npw-spot::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--pop), var(--band));
+  transform-origin: left;
+  animation: npw-fill 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s both;
+}
+
+@keyframes npw-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes npw-swap {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes npw-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes npw-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes npw-rail {
+  to {
+    background-position: 300% 0;
+  }
+}
+@keyframes npw-flicker {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.94, 1.06);
+  }
+  60% {
+    transform: scale(1.04, 0.96);
+  }
+}
+
+/* Visitors who prefer less motion get a calm version */
+@media (prefers-reduced-motion: reduce) {
+  .npw *,
+  .npw *::before,
+  .npw *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BIG APPLE LAYER: apple + taxi cursors, driving cab, footer
+   ═══════════════════════════════════════════════════════════ */
+body,
+.npw {
+  cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2732%27%20height%3D%2732%27%20viewBox%3D%270%200%2032%2032%27%3E%3Cpath%20d%3D%27M16%209c-2-2-7-2.5-9%201.5-2.2%204.4.2%2011.5%203.5%2014.5%201.6%201.4%203%201.3%204.2.6.8-.4%201.8-.4%202.6%200%201.2.7%202.6.8%204.2-.6%203.3-3%205.7-10.1%203.5-14.5C23%206.5%2018%207%2016%209z%27%20fill%3D%27%23e2231a%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271.6%27/%3E%3Cpath%20d%3D%27M16%209c0-2%20.5-4%202-5.5%27%20stroke%3D%27%235b3a1e%27%20stroke-width%3D%271.8%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27/%3E%3Cpath%20d%3D%27M17.5%205.5c2-2.5%205-2.8%206.5-2-1%202.4-3.6%203.6-6.5%202z%27%20fill%3D%27%233fa34d%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271%27/%3E%3Cellipse%20cx%3D%2711.5%27%20cy%3D%2713%27%20rx%3D%271.5%27%20ry%3D%272.6%27%20fill%3D%27%23fff%27%20opacity%3D%27.55%27%20transform%3D%27rotate%2825%2011.5%2013%29%27/%3E%3C/svg%3E")
+      16 14,
+    auto;
+}
+.npw button,
+.npw a,
+.npw select,
+.npw [role="tab"] {
+  cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2732%27%20height%3D%2732%27%20viewBox%3D%270%200%2032%2032%27%3E%3Cg%20transform%3D%27translate%2832%204%29%20scale%28-0.68%200.68%29%27%3E%3Cpath%20d%3D%27M4%2018v-5l5-1%204-6h16l5%206%206%201v5z%27%20fill%3D%27none%27%20stroke%3D%27%23fff%27%20stroke-width%3D%274%27%20stroke-linejoin%3D%27round%27/%3E%3Cpath%20d%3D%27M4%2018v-5l5-1%204-6h16l5%206%206%201v5z%27%20fill%3D%27%23f7b500%27%20stroke%3D%27%231a1a1a%27%20stroke-width%3D%271.3%27%20stroke-linejoin%3D%27round%27/%3E%3Crect%20x%3D%2717%27%20y%3D%272.5%27%20width%3D%278%27%20height%3D%273.5%27%20rx%3D%271%27%20fill%3D%27%23f7b500%27%20stroke%3D%27%231a1a1a%27%20stroke-width%3D%271%27/%3E%3Cpath%20d%3D%27M14%207h6v5h-9z%20M22%207h6l4%205h-10z%27%20fill%3D%27%239fd3ff%27/%3E%3Crect%20x%3D%2712%27%20y%3D%2713.5%27%20width%3D%2718%27%20height%3D%271.4%27%20fill%3D%27%231a1a1a%27/%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2718%27%20r%3D%273.4%27%20fill%3D%27%231a1a1a%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271.2%27/%3E%3Ccircle%20cx%3D%2733%27%20cy%3D%2718%27%20r%3D%273.4%27%20fill%3D%27%231a1a1a%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271.2%27/%3E%3C/g%3E%3C/svg%3E")
+      3 16,
+    pointer;
+}
+.npw input {
+  cursor: text;
+}
+
+/* The road: a cab drives along the shimmering line under the skyline */
+.npw-road {
+  position: relative;
+}
+.npw-cab {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 46px;
+  height: auto;
+  overflow: visible;
+  animation: npw-drive 26s linear infinite;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+}
+.npw-cab-glass {
+  fill: #bfe3ff;
+  transition: fill 0.4s ease;
+}
+.npw-beam {
+  fill: #fff3b0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.npw[data-theme="dark"] .npw-beam {
+  opacity: 0.35;
+}
+.npw[data-theme="dark"] .npw-cab-glass {
+  fill: #ffd27a;
+}
+@keyframes npw-drive {
+  0% {
+    left: -60px;
+  }
+  100% {
+    left: calc(100% + 10px);
+  }
+}
+
+/* Footer with a taxi checker stripe */
+.npw-foot {
+  display: grid;
+  gap: 10px;
+  padding: 0 28px 22px;
+}
+.npw-checker {
+  height: 8px;
+  border-radius: 2px;
+  opacity: 0.85;
+  background: repeating-conic-gradient(var(--ink) 0 25%, #f7b500 0 50%) 0 0 /
+    8px 8px;
+}
+.npw-foot-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.npw-foot-text svg {
+  flex: none;
+  transition: transform 0.3s ease;
+}
+.npw-foot:hover .npw-foot-text svg {
+  transform: rotate(-12deg) scale(1.15);
+}
+@media (max-width: 680px) {
+  .npw-foot {
+    padding: 0 16px 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .npw-cab {
+    left: 24px;
   }
 }
